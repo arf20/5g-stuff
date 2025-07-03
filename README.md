@@ -28,8 +28,10 @@ Start only neccesary services for 5G SA: smf, upf, nrf, scp, ausf, udm, pcf, nss
 
 ## srsRAN
 
+osmocom's latest Open5GS build does not like latest srsRAN from git so here we use srsRAN github release 24.04
+
 Baremetal Debian 12 desktop
-N78 band, should change to that selfprovisioning N40 band (CNAF UN-50)
+N40 band, f=2380 arfcn=476000 width=20MHz (CNAF UN-50 indicates that 2370-2390 is for self-provision mobile networks)
 
 Software: srsRAN 5G
 Hardware: USRP B200 mini with Leo GPSDO
@@ -67,4 +69,8 @@ Manual network selection -> ARFNET
 Attach wireshark to baremetal desktop, filter by SCTP and GTP to core
 
 Attach tcpdump to core
+
+## State-of-the-art
+
+Data works! Internet access check.
 
