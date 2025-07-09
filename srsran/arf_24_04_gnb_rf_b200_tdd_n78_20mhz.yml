@@ -12,7 +12,7 @@ ru_sdr:
   device_args: type=b200,num_recv_frames=64,num_send_frames=64    # Optionally pass arguments to the selected RF driver.
   srate: 23.04                                                    # RF sample rate might need to be adjusted according to selected bandwidth.
   otw_format: sc12  
-  tx_gain: 89.75                                                  # Transmit gain of the RF might need to adjusted to the given situation.
+  tx_gain: 80                                                  # Transmit gain of the RF might need to adjusted to the given situation.
   rx_gain: 40                                                     # Receive gain of the RF might need to adjusted to the given situation.
 
 cell_cfg:
@@ -26,7 +26,7 @@ cell_cfg:
 
 log:
   filename: /tmp/gnb.log                                          # Path of the log file.
-  all_level: warning                                                 # Logging level applied to all layers. 
+  all_level: warning                                                # Logging level applied to all layers. 
 
 pcap:
   mac_enable: false                                               # Set to true to enable MAC-layer PCAPs.

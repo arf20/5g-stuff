@@ -1,0 +1,27 @@
+[Unit]
+Description=Kamailio S-CSCF
+Documentation=man:kamailio(8)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=forking
+User=kamailio
+Group=kamailio
+Environment='CFGFILE=/etc/kamailio_scscf/kamailio_scscf.cfg'
+Environment='SHM_MEMORY=64'
+Environment='PKG_MEMORY=8'
+EnvironmentFile=-/etc/default/kamailio
+EnvironmentFile=-/etc/default/kamailio.d/*
+# PIDFile requires a full absolute path
+PIDFile=/run/kamailio_scscf/kamailio_scscf.pid
+# ExecStart requires a full absolute path
+ExecStart=/usr/sbin/kamailio -P /run/kamailio_scscf/kamailio_scscf.pid -f $CFGFILE -m $SHM_MEMORY -M $PKG_MEMORY
+Restart=on-failure
+# /run/kamailio in tmpfs
+RuntimeDirectory=kamailio_scscf
+RuntimeDirectoryMode=0770
+
+[Install]
+WantedBy=multi-user.target
+

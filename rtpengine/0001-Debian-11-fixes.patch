@@ -1,0 +1,56 @@
+From 33d8866e2390126dc7c82e8fb5771b28e6d9e81a Mon Sep 17 00:00:00 2001
+From: arf20 <aruizfernandez05@gmail.com>
+Date: Sat, 5 Jul 2025 18:47:53 +0200
+Subject: [PATCH] Debian 11 fixes
+
+---
+ daemon/recording.c | 6 +++---
+ debian/control     | 1 -
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/daemon/recording.c b/daemon/recording.c
+index 69be7408..27916ed9 100644
+--- a/daemon/recording.c
++++ b/daemon/recording.c
+@@ -41,7 +41,7 @@ static int append_meta_chunk(struct recording *recording, const char *buf, unsig
+ 
+ // pcap methods
+ static int pcap_create_spool_dir(const char *dirpath);
+-static void pcap_init(struct call *);
++static void _pcap_init(struct call *);
+ static void sdp_after_pcap(struct recording *, GString *str, struct call_monologue *, enum call_opmode opmode);
+ static void dump_packet_pcap(struct media_packet *mp, const str *s);
+ static void finish_pcap(struct call *);
+@@ -71,7 +71,7 @@ static const struct recording_method methods[] = {
+ 		.name = "pcap",
+ 		.kernel_support = 0,
+ 		.create_spool_dir = pcap_create_spool_dir,
+-		.init_struct = pcap_init,
++		.init_struct = _pcap_init,
+ 		.sdp_after = sdp_after_pcap,
+ 		.dump_packet = dump_packet_pcap,
+ 		.finish = finish_pcap,
+@@ -340,7 +340,7 @@ void detect_setup_recording(struct call *call, const str *recordcall, str *metad
+ 		ilog(LOG_INFO, "\"record-call\" flag "STR_FORMAT" is invalid flag.", STR_FMT(recordcall));
+ }
+ 
+-static void pcap_init(struct call *call) {
++static void _pcap_init(struct call *call) {
+ 	struct recording *recording = call->recording;
+ 
+ 	// Wireshark starts at packet index 1, so we start there, too
+diff --git a/debian/control b/debian/control
+index 71bc8929..7899e653 100644
+--- a/debian/control
++++ b/debian/control
+@@ -8,7 +8,6 @@ Build-Depends:
+  debhelper (>= 10~),
+  default-libmysqlclient-dev,
+  gperf,
+- iptables-dev (>= 1.4),
+  libavcodec-dev (>= 6:10),
+  libavfilter-dev (>= 6:10),
+  libavformat-dev (>= 6:10),
+-- 
+2.30.2
+
